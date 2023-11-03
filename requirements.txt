@@ -1,0 +1,19 @@
+jupyter
+ipykernel
+notebook
+colorama
+ipdb
+matplotlib
+seaborn
+numpy
+pandas
+scipy
+scikit-learn
+# API
+fastapi
+uvicorn
+pydantic
+python-dotenv
+
+#SQL
+pyodbc
