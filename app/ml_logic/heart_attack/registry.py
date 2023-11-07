@@ -2,8 +2,9 @@ from colorama import Fore, Style
 import glob
 import pickle
 import time
+import os
 
-from environment.params import PIPELINE_DIRECTORY_HEART_ATTACK
+from app.environment.params import PIPELINE_DIRECTORY_HEART_ATTACK
 from sklearn.pipeline import Pipeline
 
 
@@ -12,7 +13,7 @@ def save_pipeline(pipeline: Pipeline) -> None:
     timestamp = time.strftime("%Y%m%d-%H%M%S")  # e.g. 20210824-154952
 
     # Save pipeline locally
-    pipeline_path =  PIPELINE_DIRECTORY_HEART_ATTACK + f"{timestamp}.pkl"
+    pipeline_path = os.path.join(PIPELINE_DIRECTORY_HEART_ATTACK ,f"{timestamp}.pkl")
     pickle.dump(pipeline, open(pipeline_path, 'wb'))
 
     print("✅ Pipeline saved locally")

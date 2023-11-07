@@ -1,9 +1,8 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-
-
-app = FastAPI()
-
+from app.interface.heart_attack.main import predict
+from app.api.model.heart_attack.HeartAttackPatientDto import HeartAttackPatientDto
+from app.api.services.heart_attack.adapters import patentDtoToHeartAttackDataFrame
 app = FastAPI()
 
 app.add_middleware(
@@ -19,5 +18,11 @@ def index() -> dict:
     return {'ok': True}
 
 @app.post('/heart-attack/predict')
-def heart_attack_predict():
-    print('PRED')
+def heart_attack_predict(patientDto: HeartAttackPatientDto):
+    X_pred = patentDtoToHeartAttackDataFrame(patientDto)
+    print(X_pred)
+    print('#########################################')
+    print('#########################################')
+    print(predict(X_pred))
+    print('#########################################')
+    print('#########################################')

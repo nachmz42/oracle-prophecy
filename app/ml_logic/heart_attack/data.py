@@ -10,6 +10,6 @@ def load_data_from_sql():
         sql_query = "SELECT * FROM dbo.Patients"
         df = pd.read_sql_query(sql_query, conn)
         conn.close()
-        print(df)
+        return df
     else:
         print(Fore.RED + f'❌Error connecting SQL Server')
