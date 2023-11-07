@@ -30,7 +30,7 @@ def train():
     n = min(len(df_0), len(df_1))
 
     # Sample n rows from the larger group without replacement
-    df_0_balanced = df_0.sample(n, replace=False)
+    df_0_balanced = df_0.sample(n, replace=False, random_state=42)
 
     # Concatenate the balanced group with the smaller group
     data = pd.concat([df_0_balanced, df_1])
@@ -47,10 +47,29 @@ def train():
     save_pipeline(pipeline=pipeline)
 
 def evaluate():
-    _, X, _, y = train_test_split(X, y, test_size=0.2, random_state=42)
-    print(Fore.MAGENTA + "\n ⭐️ Use case: evaluating the Heart Attack model" + Style.RESET_ALL)
+    print(Fore.MAGENTA + "\n ⭐️ Use case: evaluate the Heart Attack model" + Style.RESET_ALL)
+    data = load_data_from_sql()
+    data = preprocess(data)
+
+    data.drop_duplicates(inplace=True)
+    data.dropna(inplace=True)
+    # Balance data
+    df_0 = data[data['HeartAttackRisk'] == 0] # The group with spam value 0
+    df_1 = data[data['HeartAttackRisk'] == 1] # The group with spam value 1
+
+    # Find the number of rows in the smaller group
+    n = min(len(df_0), len(df_1))
+
+    # Sample n rows from the larger group without replacement
+    df_0_balanced = df_0.sample(n, replace=False, random_state=42)
+
+    # Concatenate the balanced group with the smaller group
+    data = pd.concat([df_0_balanced, df_1])
+    X = data.drop(columns=['HeartAttackRisk'],axis=1)
+    y= data[['HeartAttackRisk']]
+    _, X_test, _, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
     pipeline = load_pipeline()
-    accuracy = pipeline.score(X, y)
+    accuracy = pipeline.score(X_test, y_test)
     print(f"✅ Model acurracy: {accuracy}")
 
 def predict(X_pred: pd.DataFrame | None = None):
