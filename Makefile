@@ -9,6 +9,8 @@ reset_local_files:
 	rm -rf ${LOCAL_MLOPS_DIRECTORY}
 	mkdir -p ${LOCAL_MLOPS_DIRECTORY}/training_outputs/pipelines/heart-attack
 	mkdir ${LOCAL_MLOPS_DIRECTORY}/training_outputs/params
+	mkdir -p ${LOCAL_MLOPS_DIRECTORY}/data/heart-attack
+
 
 # API
 run_api:

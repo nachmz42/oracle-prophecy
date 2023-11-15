@@ -1,4 +1,4 @@
-from app.ml_logic.heart_attack.data import load_data_from_sql
+from app.ml_logic.heart_attack.data import load_data
 from app.environment.params import HEART_ATTACK_COLUMNS_TO_DROP, HEART_ATTACK_NUM_COLUMNS
 import pandas as pd
 from sklearn.model_selection import train_test_split
@@ -17,7 +17,7 @@ def preprocess(data: pd.DataFrame):
 
 def train():
     print(Fore.MAGENTA + "\n ⭐️ Use case: preprocess and train the Heart Attack model" + Style.RESET_ALL)
-    data = load_data_from_sql()
+    data = load_data()
     data = preprocess(data)
 
     data.drop_duplicates(inplace=True)
@@ -48,7 +48,7 @@ def train():
 
 def evaluate():
     print(Fore.MAGENTA + "\n ⭐️ Use case: evaluate the Heart Attack model" + Style.RESET_ALL)
-    data = load_data_from_sql()
+    data = load_data()
     data = preprocess(data)
 
     data.drop_duplicates(inplace=True)
